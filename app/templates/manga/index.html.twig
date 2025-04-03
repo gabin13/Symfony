@@ -3,39 +3,63 @@
 {% block title %}Manga index{% endblock %}
 
 {% block body %}
-    <h1>Manga index</h1>
+    <div class="container py-4">
+        <div class="row mb-4 align-items-center">
+            <div class="col">
+                <h1 class="display-5 fw-semibold">Manga index</h1>
+            </div>
+            <div class="col-auto">
+                <a href="{{ path('app_manga_new') }}" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+                    Ajouter un manga
+                </a>
+            </div>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>UpdatedAt</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for manga in mangas %}
-            <tr>
-                <td>{{ manga.id }}</td>
-                <td>{{ manga.title }}</td>
-                <td>{{ manga.price }}</td>
-                <td>{{ manga.updatedAt ? manga.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ manga.createdAt ? manga.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_manga_show', {'id': manga.id}) }}">show</a>
-                    <a href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
-                </td>
-            </tr>
+        {% if mangas|length > 0 %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for manga in mangas %}
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-secondary rounded-pill">ID: {{ manga.id }}</span>
+                                    <span class="fw-bold text-primary">{{ manga.price }} €</span>
+                                </div>
+                                <h5 class="card-title mb-3">{{ manga.title }}</h5>
+                                <div class="small text-muted mb-3">
+                                    <div>Créé le: {{ manga.createdAt ? manga.createdAt|date('d/m/Y') : '-' }}</div>
+                                    <div>Mis à jour: {{ manga.updatedAt ? manga.updatedAt|date('d/m/Y') : '-' }}</div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 pt-0">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="{{ path('app_manga_show', {'id': manga.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+                                    <a href="{{ path('app_manga_edit', {'id': manga.id}) }}" class="btn btn-sm btn-outline-secondary">Éditer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="card border-0 shadow-sm">
+                <div class="card-body py-5">
+                    <div class="text-center text-muted">
+                        <p class="mb-0 fs-5">Aucun manga trouvé</p>
+                        <p class="mt-2">Commencez par ajouter votre premier manga</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 
-    <a href="{{ path('app_manga_new') }}">Create new</a>
+    <style>
+        .hover-shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        .transition {
+            transition: all 0.3s ease;
+        }
+    </style>
 {% endblock %}

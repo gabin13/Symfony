@@ -1,11 +1,78 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}New Manga{% endblock %}
-
+{% block title %}Nouveau Manga{% endblock %}
 {% block body %}
-    <h1>Create new Manga</h1>
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_manga_index') }}" class="text-decoration-none">Index</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Nouveau manga</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-semibold mb-4">Ajouter un manga</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                    <div class="row g-4">
+                        {% if form.title is defined %}
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre du manga'}}) }}
+                                {{ form_label(form.title, 'Titre') }}
+                                <div class="invalid-feedback">
+                                    {{ form_errors(form.title) }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
 
-    {{ include('manga/_form.html.twig') }}
+                        {% if form.price is defined %}
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Prix'}}) }}
+                                {{ form_label(form.price, 'Prix') }}
+                                <div class="invalid-feedback">
+                                    {{ form_errors(form.price) }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
 
-    <a href="{{ path('app_manga_index') }}">back to list</a>
+                        {# Afficher les autres champs du formulaire qui ne sont pas explicitement définis ci-dessus #}
+                        {% for field in form %}
+                            {% if field.vars.name != 'title' and field.vars.name != 'price' and field.vars.name != '_token' %}
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form_widget(field, {'attr': {'class': 'form-control', 'placeholder': field.vars.label}}) }}
+                                        {{ form_label(field) }}
+                                        <div class="invalid-feedback">
+                                            {{ form_errors(field) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="col-12 mt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ path('app_manga_index') }}" class="btn btn-outline-secondary">
+                                    Retour à la liste
+                                </a>
+                                <button type="submit" class="btn btn-primary px-4 py-2">
+                                    {{ button_label|default('Enregistrer') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

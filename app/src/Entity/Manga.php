@@ -26,13 +26,17 @@ class Manga
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'mangas')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     #[ORM\PrePersist]
     public function setTimestampsValue(): void
     {
         if ($this->createdAt == null) {
             $this->createdAt = new \DateTimeImmutable();
         }
-        $this->updateAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
 
@@ -88,4 +92,17 @@ class Manga
 
         return $this;
     }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
 }

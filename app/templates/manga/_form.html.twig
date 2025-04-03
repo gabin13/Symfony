@@ -1,4 +1,48 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="row g-4">
+        {% if form.title is defined %}
+        <div class="col-12">
+            <div class="form-floating">
+                {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre du manga'}}) }}
+                {{ form_label(form.title, 'Titre') }}
+                <div class="invalid-feedback">
+                    {{ form_errors(form.title) }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.price is defined %}
+        <div class="col-md-6">
+            <div class="form-floating">
+                {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Prix'}}) }}
+                {{ form_label(form.price, 'Prix') }}
+                <div class="invalid-feedback">
+                    {{ form_errors(form.price) }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {# Afficher les autres champs du formulaire qui ne sont pas explicitement définis ci-dessus #}
+        {% for field in form %}
+            {% if field.vars.name != 'title' and field.vars.name != 'price' and field.vars.name != '_token' %}
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {{ form_widget(field, {'attr': {'class': 'form-control', 'placeholder': field.vars.label}}) }}
+                        {{ form_label(field) }}
+                        <div class="invalid-feedback">
+                            {{ form_errors(field) }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary px-4 py-2">
+                {{ button_label|default('Enregistrer') }}
+            </button>
+        </div>
+    </div>
 {{ form_end(form) }}

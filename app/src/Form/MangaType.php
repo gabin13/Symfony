@@ -14,12 +14,7 @@ class MangaType extends AbstractType
         $builder
             ->add('title')
             ->add('price')
-            ->add('updatedAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
+            ->add('category')
         ;
     }
 
