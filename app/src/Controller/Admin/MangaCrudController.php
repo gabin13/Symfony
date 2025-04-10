@@ -27,7 +27,8 @@ class MangaCrudController extends AbstractCrudController
             MoneyField::new('price')->setCurrency('EUR'),
             AssociationField::new('category')->setCrudController(CategoryCrudController::class),
             DateTimeField::new('createdAt')->hideOnForm(),
-            DateTimeField::new('updatedAt')->hideOnForm(),              
+            DateTimeField::new('updatedAt')->hideOnForm(),       
+            AssociationField::new('tags')->setCrudController(TagCrudController::class),       
         ];
     }
     

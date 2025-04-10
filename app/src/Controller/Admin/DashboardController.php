@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 use App\Entity\Category;
 use App\Entity\Manga;
+use App\Entity\Tag;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -46,5 +47,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class);
         yield MenuItem::linkToCrud('Mangas', 'fas fa-list', Manga::class);
+        yield MenuItem::linkToCrud('Tags', 'fas fa-tag', Tag::class); // Add this line
     }
 }
