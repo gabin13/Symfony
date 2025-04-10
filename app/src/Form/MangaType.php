@@ -15,6 +15,7 @@ class MangaType extends AbstractType
             ->add('title')
             ->add('price')
             ->add('category')
+            ->add('tag')
         ;
     }
 

@@ -5,6 +5,7 @@
 {% block body %}
     <div class="container py-4">
         <div class="row mb-4 align-items-center">
+        
             <div class="col">
                 <h1 class="display-5 fw-semibold">Manga index</h1>
             </div>
@@ -14,6 +15,19 @@
                 </a>
             </div>
         </div>
+
+        <div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <form method="get" action="{{ path('app_manga_index') }}" class="d-flex">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher un manga..." value="{{ search is defined ? search : '' }}">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i> Rechercher
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
         {% if mangas|length > 0 %}
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -42,15 +56,21 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div class="card border-0 shadow-sm">
-                <div class="card-body py-5">
-                    <div class="text-center text-muted">
-                        <p class="mb-0 fs-5">Aucun manga trouvé</p>
-                        <p class="mt-2">Commencez par ajouter votre premier manga</p>
-                    </div>
-                </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body py-5">
+            <div class="text-center text-muted">
+                {% if search is defined and search is not empty %}
+                    <p class="mb-0 fs-5">Aucun manga trouvé pour "{{ search }}"</p>
+                    <p class="mt-2">Essayez avec un autre terme de recherche</p>
+                    <a href="{{ path('app_manga_index') }}" class="btn btn-outline-secondary mt-3">Voir tous les mangas</a>
+                {% else %}
+                    <p class="mb-0 fs-5">Aucun manga trouvé</p>
+                    <p class="mt-2">Commencez par ajouter votre premier manga</p>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
+    </div>
+{% endif %}
     </div>
 
     <style>
